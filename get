@@ -6,6 +6,6 @@ b=$3
 m=$4
 
 trash -f outs
-./export-track $a $b $m
+./export-track "$a" "$b" "$m"
 ffmpeg -i outs/*.wav "$dest"
 trash outs
