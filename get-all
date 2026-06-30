@@ -1,0 +1,17 @@
+set -xe
+
+mistraumatism="$HOME/Code_Projects/On_GitHub/mistraumatism"
+
+trash -f "$mistraumatism/music"
+trash -f "$mistraumatism/sounds"
+mkdir "$mistraumatism/music"
+mkdir "$mistraumatism/sounds"
+
+./get "$mistraumatism/music/splintered-murk.mp3" 1 1
+./get "$mistraumatism/music/primordial-sickness.mp3" 2
+./get "$mistraumatism/sounds/playerDeath.mp3" 3
+./get "$mistraumatism/music/eyes-in-the-darkness-of-your-mind.mp3" 4
+./get "$mistraumatism/music/the-long-view.mp3" 5
+./get "$mistraumatism/music/sacrosanct.mp3" 6
+./get "$mistraumatism/music/mercious.mp3" 7
+./get "$mistraumatism/music/nail-and-claw.mp3" 8 "" DMG # Using a different model fixes an issue with the noise channel in this track

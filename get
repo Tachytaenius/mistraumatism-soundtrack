@@ -1,0 +1,11 @@
+set -xe
+
+dest="$1"
+a=$2
+b=$3
+m=$4
+
+trash -f outs
+./export-track $a $b $m
+ffmpeg -i outs/*.wav "$dest"
+trash outs

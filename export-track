@@ -1,0 +1,35 @@
+set -xe
+
+# gb-presenter-rs-clean-trim is a modified version of gb-presenter-rs I made in order to not
+# need manual or automatic pre/post trimming, since the amount of silence seems to vary!!
+
+aName="lsdj9_4_0_Mistraumatism_OST_A"
+bName="lsdj9_4_0_Mistraumatism_OST_B"
+resX=16
+resY=16
+outdir="outs"
+
+# Setting model to DMG seemed to fix an issue with the noise channel in track FINAL.
+# But, it causes issues with pan/mute pops/buzz sounding different...
+# So it's now variable depending on what the song needs...?
+base="gb-presenter-rs-clean-trim --ow $resX --oh $resX -s loops:1 -S 0"
+if [ $3 ]; then
+	base="$base -m $3"
+fi
+
+mkdir -p $outdir
+if [ $2 ]; then
+	output="$outdir/2X_$1-$2_$(date +%F_%R)"
+	add="--2xlsdj $aName.gb $aName.sav $bName.gb $bName.sav --track $1 --track $2"
+else
+	output="$outdir/1X_$1_$(date +%F_%R)"
+	add="--lsdj $aName.gb $aName.sav --track $1"
+fi
+$base $add $output.mp4
+
+# length=$(ffprobe $output.mp4 -v error -show_entries format=duration -of csv=p=0)
+# newLength=$(echo $length - $secondsFromEnd | bc)
+# ffmpeg -ss 00:00:$secondsFromStart -to $newLength -i "$output.mp4" "$output.wav"
+ffmpeg -i "$output.mp4" "$output.wav"
+
+trash "$output.mp4"

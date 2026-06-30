@@ -1,0 +1,15 @@
+set -xe
+
+source="$1"
+name="$2"
+dest="$3"
+backup="TEMP_${dest}"
+output="outdump"
+liblsdj="$HOME/Tools/liblsdj"
+
+mv "$dest" "$backup"
+wine "$liblsdj/lsdsng-export.exe" "$source" -n "$name" -o "$output"
+wine "$liblsdj/lsdsng-import.exe" -o "$dest" "$backup" "$(ls --quoting-style=literal -1 "$output"/*)"
+trash "$backup"
+trash "$output"
+echo "Don't forget to let the sav upgrade (run the gb) so that the gb-presenter-rs macros work."
